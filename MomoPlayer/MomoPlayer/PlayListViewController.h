@@ -10,7 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @protocol PlayListViewControllerDelegate
--(void) nextSong:index;
+-(void) play:(int)index;
 -(void) exitPlay;
 @end
 

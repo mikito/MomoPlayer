@@ -52,11 +52,12 @@ io.sockets.on('connection', function(socket){
     console.log("makePlayList");
 
     // Make Playlist Data
-    var playlist = {name : "Test", items : data.playlist, index : 0, join: 0};
+    var playlist = {id : 0, name : "Test", items : data.playlist, index : -1, join: 0};
 
     playlists.push(playlist);
+    playlist.id = playlists.length - 1; 
 
-    join(socket, playlists.length - 1);
+    join(socket, playlist.id);
     io.sockets.emit("playlists", playlists);
   });
 
@@ -75,10 +76,12 @@ io.sockets.on('connection', function(socket){
   });
 
   socket.on("play", function(data){
-    console.log("play");
+    console.log("play:" + data.index);
 
     socket.get('playlist', function(err, playlist){
-      console.log(data);
+      if(playlist.index != data.index){
+        io.sockets.in(playlist.id).emit('play');
+      }
     });
   });
 

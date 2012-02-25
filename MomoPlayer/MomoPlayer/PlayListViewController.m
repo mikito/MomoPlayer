@@ -30,6 +30,13 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [delegate play:playIndex];
+    
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -121,8 +128,8 @@ numberOfRowsInSection:(NSInteger)section{
     id item = [playlist objectAtIndex:indexPath.row];
     if ([item isKindOfClass:[MPMediaItem class]]) {
         MPMediaItem *mediaItem = (MPMediaItem *)item;
-        cell.textLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
-        cell.detailTextLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyTitle];
+        cell.textLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyTitle];
+        cell.detailTextLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
     }else{
         NSDictionary *mediaItem = (NSDictionary *)item;
         cell.textLabel.text = @"You Don't have this song";

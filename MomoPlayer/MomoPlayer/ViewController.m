@@ -47,7 +47,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //[self leave];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -165,9 +164,16 @@ numberOfRowsInSection:(NSInteger)section{
 {
     // NSLog(@"-- didReceiveMessage() >>> data: %@", [[packet.args objectAtIndex:0] objectForKey:@"echo"]);
     if([packet.name isEqualToString:@"playlists"]){
-        NSLog(@"Receive PlayList");
+        NSLog(@"Receive PlayLists");
         self.playlists = [packet.args objectAtIndex:0];
         [playlistView reloadData];
+    }
+    
+    if([packet.name isEqualToString:@"play"]){
+        NSLog(@"Play!!");
+        
+        NSNumber *index = [[packet.args objectAtIndex:0] objectForKey:@"index"];
+        [playlistViewController playMusic:[index intValue]];
     }
 }
 
@@ -182,8 +188,9 @@ numberOfRowsInSection:(NSInteger)section{
 }
 
 # pragma mark - PlayListView
--(void) nextSong:index{
-
+-(void) play:(int)index{
+    NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:index], @"index", nil];
+    [socket sendEvent:@"play" withData:data]; 
 }
 -(void) exitPlay{
     [self leave];
