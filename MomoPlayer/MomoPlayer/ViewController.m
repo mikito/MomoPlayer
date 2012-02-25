@@ -135,7 +135,8 @@ numberOfRowsInSection:(NSInteger)section{
     }
 		
     // Configure the cell...
-    cell.textLabel.text = [[playlists objectAtIndex:indexPath.row] objectForKey:@"name"];
+    NSNumber *join = [[playlists objectAtIndex:indexPath.row] objectForKey:@"join"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@(%d)",[[playlists objectAtIndex:indexPath.row] objectForKey:@"name"], [join intValue]];
     cell.detailTextLabel.text = @"";//[[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyTitle];
     return cell;
 }

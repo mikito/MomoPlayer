@@ -52,33 +52,31 @@ io.sockets.on('connection', function(socket){
     console.log("makePlayList");
 
     // Make Playlist Data
-    var playlist = {name : "Test", items : data.playlist, index : 0, join: 1};
+    var playlist = {name : "Test", items : data.playlist, index : 0, join: 0};
 
     playlists.push(playlist);
 
-    socket.join(playlists.length - 1);
-    socket.set("playlist", playlists[playlists.length - 1]);
-
+    join(socket, playlists.length - 1);
     io.sockets.emit("playlists", playlists);
   });
 
   socket.on("join", function(data){
-    socket.join(data.playlistid);
-    socket.set("playlist", playlists[data.playlistid]);
-    playlists[data.playlistid].join++;
     console.log("join:" + playlists[data.playlistid].join);
+
+    join(socket, data.playlistid);
+    
+    // Update Playlist Data
+    io.sockets.emit("playlists", playlists);
   });
 
   socket.on("leave", function(data){
     console.log("leave");
-    socket.leave();
-    socket.get('playlist', function(err, playlist){
-      playlist.join--;
-      console.log("join:" + playlist.join);
-    });
+    leave(socket);
   });
 
-  socket.on("next", function(data){
+  socket.on("play", function(data){
+    console.log("play");
+
     socket.get('playlist', function(err, playlist){
       console.log(data);
     });
@@ -87,7 +85,28 @@ io.sockets.on('connection', function(socket){
   // Disconenct
   socket.on('disconnect', function () {
     console.log('disconnect');
-
+    leave(socket);
   });
 });
+
+function join(socket, playlistId){
+  socket.join(playlistId);
+  socket.set("playlist", playlists[playlistId]);
+  playlists[playlistId].join++;
+}
+
+function leave(socket){
+  socket.leave();
+  socket.get('playlist', function(err, playlist){
+    playlist.join--;
+    console.log("join:" + playlist.join);
+
+    if(playlist.join == 0){
+      // Delete Playlist
+    }
+
+    // Update Playlist Data
+    io.sockets.emit("playlists", playlists);
+  });
+}
 
