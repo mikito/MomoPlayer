@@ -89,15 +89,15 @@
 #pragma mark - Player
 -(void) playerNotification:(id)notification{
     if(iPodMusicPlayer.playbackState == MPMusicPlaybackStateStopped && join){
-        playIndex++;
-        if([playlist count] <= playIndex){
+        
+        if([playlist count] <= playIndex+1){
             join = false;
             [self.navigationController popViewControllerAnimated:YES];
             [iPodMusicPlayer stop];
             [delegate exitPlay];
             return;
         }
-        [delegate play:playIndex];
+        [delegate play:playIndex+1];
         NSLog(@"Next Song");
     }
 }
@@ -106,6 +106,8 @@
     if([playlist count] <= index) return;
     if(index < 0) return;
     if(playIndex == index && iPodMusicPlayer.playbackState == MPMusicPlaybackStatePlaying) return;
+    
+    playIndex = index;
     
     id item = [playlist objectAtIndex:index];
     if ([item isKindOfClass:[MPMediaItem class]]) {
