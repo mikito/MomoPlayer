@@ -52,7 +52,7 @@ io.sockets.on('connection', function(socket){
     console.log("makePlayList");
 
     // Make Playlist Data
-    var playlist = {id : 0, name : "Test", items : data.playlist, index : -1, join: 0};
+    var playlist = {id : 0, name : "Test", items : data.playlist, index : 0, join: 0};
 
     playlists.push(playlist);
     playlist.id = playlists.length - 1; 
@@ -79,9 +79,10 @@ io.sockets.on('connection', function(socket){
     console.log("play:" + data.index);
 
     socket.get('playlist', function(err, playlist){
-      if(playlist.index != data.index){
-        io.sockets.in(playlist.id).emit('play');
-      }
+    //  if(playlist.index != data.index){
+        io.sockets.in(playlist.id).emit('play', data.index);
+        io.sockets.emit("playlists", playlists);
+    //  }
     });
   });
 

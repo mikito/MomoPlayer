@@ -106,6 +106,7 @@
     [data release];
     
     [playlistViewController setPlaylist:list];
+    playlistViewController.playIndex = 0;
     [self.navigationController pushViewController:playlistViewController animated:YES];
 }
 
@@ -143,8 +144,12 @@ numberOfRowsInSection:(NSInteger)section{
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
     [playlistViewController setPlaylist:[[playlists objectAtIndex:indexPath.row] objectForKey:@"items"]];
+    
+    NSNumber *index = [[playlists objectAtIndex:indexPath.row] objectForKey:@"index"];
+    NSNumber *id = [[playlists objectAtIndex:indexPath.row] objectForKey:@"id"];
+    playlistViewController.playIndex = [index intValue];
     [self.navigationController pushViewController:playlistViewController animated:YES];
-    [self join:indexPath.row];
+    [self join:[id intValue]];
 }
 
 
@@ -168,11 +173,12 @@ numberOfRowsInSection:(NSInteger)section{
         self.playlists = [packet.args objectAtIndex:0];
         [playlistView reloadData];
     }
-    
+
     if([packet.name isEqualToString:@"play"]){
-        NSLog(@"Play!!");
         
-        NSNumber *index = [[packet.args objectAtIndex:0] objectForKey:@"index"];
+        
+        NSNumber *index = [packet.args objectAtIndex:0];
+        NSLog(@"Play!! Index:%d", [index intValue]);
         [playlistViewController playMusic:[index intValue]];
     }
 }

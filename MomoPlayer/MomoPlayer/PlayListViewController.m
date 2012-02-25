@@ -12,6 +12,7 @@
 @implementation PlayListViewController
 //@synthesize playlist;
 @synthesize delegate;
+@synthesize playIndex;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,7 +52,7 @@
                                                             
     [iPodMusicPlayer beginGeneratingPlaybackNotifications];
     
-    playIndex = 0;
+    //playIndex = 0;
     
     //[self playMusic:playIndex];
 }
@@ -65,6 +66,12 @@
     if(playlist)[playlist release];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    join = true;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -72,24 +79,33 @@
 }
 
 - (IBAction)pushBackButton{
+    join = false;
     [self.navigationController popViewControllerAnimated:YES];
     [iPodMusicPlayer stop];
+    
     [delegate exitPlay];
 }
 
 #pragma mark - Player
 -(void) playerNotification:(id)notification{
-    if(iPodMusicPlayer.playbackState == MPMusicPlaybackStateStopped){
-        playIndex ++;
+    if(iPodMusicPlayer.playbackState == MPMusicPlaybackStateStopped && join){
+        playIndex++;
         if([playlist count] <= playIndex){
-            // send end;
+            join = false;
+            [self.navigationController popViewControllerAnimated:YES];
+            [iPodMusicPlayer stop];
+            [delegate exitPlay];
+            return;
         }
-        NSLog(@"Music Stopped");
+        [delegate play:playIndex];
+        NSLog(@"Next Song");
     }
 }
 
 -(void)playMusic:(int)index{
     if([playlist count] <= index) return;
+    if(index < 0) return;
+    if(playIndex == index && iPodMusicPlayer.playbackState == MPMusicPlaybackStatePlaying) return;
     
     id item = [playlist objectAtIndex:index];
     if ([item isKindOfClass:[MPMediaItem class]]) {
@@ -97,7 +113,9 @@
         MPMediaItemCollection *mediaItemCollection = [[MPMediaItemCollection alloc] initWithItems:items];
         [iPodMusicPlayer setQueueWithItemCollection:mediaItemCollection];
         [iPodMusicPlayer play];
+       
     }
+    [playlistView reloadData];
 }
 
 #pragma mark - TableView
@@ -130,13 +148,42 @@ numberOfRowsInSection:(NSInteger)section{
         MPMediaItem *mediaItem = (MPMediaItem *)item;
         cell.textLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyTitle];
         cell.detailTextLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
+        
     }else{
         NSDictionary *mediaItem = (NSDictionary *)item;
         cell.textLabel.text = @"You Don't have this song";
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ : %@", [mediaItem valueForKey:@"artist"], [mediaItem valueForKey:@"title"]];
     }
+    if(indexPath.row == playIndex) cell.imageView.image = [UIImage imageNamed:@"play"];
+    else cell.imageView.image = [UIImage imageNamed:@"none"];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id item = [playlist objectAtIndex:indexPath.row];
+    if (![item isKindOfClass:[MPMediaItem class]]){
+        NSLog(@"iTunes!");
+        MPMediaItem *mediaItem = (MPMediaItem *)item;
+        
+        NSString *query =  [NSString stringWithFormat:@"%@ %@", [mediaItem valueForKey:@"artist"], [mediaItem valueForKey:@"title"]];		
+
+        NSString *encode = (NSString*)CFURLCreateStringByAddingPercentEscapes(  
+                                                                                  kCFAllocatorDefault,  
+                                                                                  (CFStringRef)query,  
+                                                                                  NULL,  
+                                                                                  NULL,  
+                                                                                  kCFStringEncodingUTF8  
+                                                                                  );
+        NSString *queryString = [NSString stringWithFormat: 
+                           @"%@%@",
+                           ITUNESURL,
+                           encode];
+		
+		NSURL *url = [NSURL URLWithString:queryString];
+		
+		[[UIApplication sharedApplication] openURL:url];
+    }
 }
 
 -(void) setPlaylist:(NSArray *)items{
@@ -170,6 +217,6 @@ numberOfRowsInSection:(NSInteger)section{
     }
     
 }
-                                     
+                        
                             
 @end

@@ -10,6 +10,8 @@
 		0C7DD55114F866E900D46892 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7DD55014F866E900D46892 /* MediaPlayer.framework */; };
 		0C7DD55514F87B5B00D46892 /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DD55314F87B5B00D46892 /* PlayListViewController.m */; };
 		0C7DD55614F87B5B00D46892 /* PlayListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DD55414F87B5B00D46892 /* PlayListViewController.xib */; };
+		0C7DD55A14F8D5B400D46892 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DD55814F8D5B400D46892 /* play.png */; };
+		0C7DD55B14F8D5B400D46892 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DD55914F8D5B400D46892 /* none.png */; };
 		0CB395FD14F7E75200AC23EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB395FC14F7E75200AC23EB /* UIKit.framework */; };
 		0CB395FF14F7E75200AC23EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB395FE14F7E75200AC23EB /* Foundation.framework */; };
 		0CB3960114F7E75200AC23EB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB3960014F7E75200AC23EB /* CoreGraphics.framework */; };
@@ -59,6 +61,8 @@
 		0C7DD55214F87B5B00D46892 /* PlayListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
 		0C7DD55314F87B5B00D46892 /* PlayListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
 		0C7DD55414F87B5B00D46892 /* PlayListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayListViewController.xib; sourceTree = "<group>"; };
+		0C7DD55814F8D5B400D46892 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		0C7DD55914F8D5B400D46892 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
 		0CB395F814F7E75200AC23EB /* MomoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MomoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB395FC14F7E75200AC23EB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0CB395FE14F7E75200AC23EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -160,6 +164,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C7DD55714F8D5A100D46892 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0C7DD55814F8D5B400D46892 /* play.png */,
+				0C7DD55914F8D5B400D46892 /* none.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		0CB395ED14F7E75200AC23EB = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +224,7 @@
 				0C7DD55214F87B5B00D46892 /* PlayListViewController.h */,
 				0C7DD55314F87B5B00D46892 /* PlayListViewController.m */,
 				0C7DD55414F87B5B00D46892 /* PlayListViewController.xib */,
+				0C7DD55714F8D5A100D46892 /* Resources */,
 			);
 			path = MomoPlayer;
 			sourceTree = "<group>";
@@ -384,6 +398,8 @@
 				0CB396CA14F7E92700AC23EB /* AsyncSocket Documentation.html in Resources */,
 				0CB396CD14F7E92700AC23EB /* changes.txt in Resources */,
 				0C7DD55614F87B5B00D46892 /* PlayListViewController.xib in Resources */,
+				0C7DD55A14F8D5B400D46892 /* play.png in Resources */,
+				0C7DD55B14F8D5B400D46892 /* none.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

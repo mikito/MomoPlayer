@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#define ITUNESURL @"http://ax.search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=music&restrict=true&submit=media&term="
 
 @protocol PlayListViewControllerDelegate
 -(void) play:(int)index;
@@ -20,6 +21,7 @@
     MPMusicPlayerController *iPodMusicPlayer;
     NSMutableArray *playlist;
     int playIndex;
+    BOOL join;
 }
 -(void) setPlaylist:(NSArray *)items;
 -(IBAction) pushBackButton;
@@ -27,5 +29,6 @@
 
 //@property (nonatomic, retain) MPMediaItemCollection *playlist;
 @property (nonatomic, retain) id delegate;
+@property (nonatomic) int playIndex;
 
 @end
