@@ -50,8 +50,10 @@ io.sockets.on('connection', function(socket){
 
   socket.on("makePlayList", function(data){
     console.log("makePlayList");
-    var playlist = {name : "Test", items : data};
+    var playlist = {name : "Test", items : data.playlist};
 
     playlists.push(playlist);
+
+    io.sockets.emit("playlists", playlists);
   });
 });

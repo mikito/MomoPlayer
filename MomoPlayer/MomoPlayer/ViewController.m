@@ -88,7 +88,8 @@
     [mediaPicker release];
     
     PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
-    playlistViewController.playlist = mediaItemCollection;
+    //playlistViewController.playlist = mediaItemCollection;
+    [playlistViewController setPlaylist:nil];
     [self.navigationController pushViewController:playlistViewController animated:YES];
     
     NSMutableArray *list = [[NSMutableArray alloc] init];
@@ -142,27 +143,9 @@ numberOfRowsInSection:(NSInteger)section{
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	/*
-    if (!isExistData) return;
-	
-	Node_Artist *n = (Node_Artist *)[artists objectAtIndex:[indexPath row]];
-	
-	MusicianViewController *mView;
-	if(![self.viewcontroller isKindOfClass:[MusicianViewController class]]){
-		MusicianViewController *vc = [[MusicianViewController alloc] 
-									  initWithNibName:@"MusicianViewController"
-									  bundle:[NSBundle mainBundle]];
-		self.viewcontroller = vc;
-		mView = vc;
-		[vc release];
-	}else{
-		mView = (MusicianViewController *)self.viewcontroller;
-		mView.musicians = [[NSArray alloc]init]; 		
-	}
-	
-	[mView loadData:n];
-	[self.navigationController pushViewController:self.viewcontroller animated:YES];
-    */
+    PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
+    [playlistViewController setPlaylist:[[playlists objectAtIndex:indexPath.row] objectForKey:@"items"]];
+    [self.navigationController pushViewController:playlistViewController animated:YES];
 }
 
 
@@ -183,7 +166,7 @@ numberOfRowsInSection:(NSInteger)section{
     // NSLog(@"-- didReceiveMessage() >>> data: %@", [[packet.args objectAtIndex:0] objectForKey:@"echo"]);
     if([packet.name isEqualToString:@"playlists"]){
         NSLog(@"Receive PlayList");
-        self.playlists =[packet.args objectAtIndex:0];
+        self.playlists = [packet.args objectAtIndex:0];
         [playlistView reloadData];
     }
 }
