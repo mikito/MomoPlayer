@@ -35,6 +35,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    
+    [self playMusic:0];
 }
 
 - (void)viewDidUnload
@@ -54,6 +58,21 @@
 
 - (IBAction)pushBackButton{
     [self.navigationController popViewControllerAnimated:YES];
+    [iPodMusicPlayer stop];
+}
+
+#pragma mark - Player
+
+-(void)playMusic:(int)index{
+    if([playlist count] <= index) return;
+    
+    id item = [playlist objectAtIndex:index];
+    if ([item isKindOfClass:[MPMediaItem class]]) {
+        NSArray *items = [[NSArray alloc] initWithObjects:(MPMediaItem *)item, nil];
+        MPMediaItemCollection *mediaItemCollection = [[MPMediaItemCollection alloc] initWithItems:items];
+        [iPodMusicPlayer setQueueWithItemCollection:mediaItemCollection];
+        [iPodMusicPlayer play];
+    }
 }
 
 #pragma mark - TableView
@@ -82,7 +101,7 @@ numberOfRowsInSection:(NSInteger)section{
     
     // Configure the cell...
     id item = [playlist objectAtIndex:indexPath.row];
-  if ([item isKindOfClass:[MPMediaItem class]]) {
+    if ([item isKindOfClass:[MPMediaItem class]]) {
         MPMediaItem *mediaItem = (MPMediaItem *)item;
         cell.textLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyArtist];
         cell.detailTextLabel.text = [mediaItem valueForProperty:MPMediaItemPropertyTitle];

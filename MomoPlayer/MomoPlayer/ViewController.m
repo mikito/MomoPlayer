@@ -77,11 +77,6 @@
 
 #pragma mark - MediaPicker
 -(void) mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
-    /*
-     MPMusicPlayerController *iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-    [iPodMusicPlayer setQueueWithItemCollection:mediaItemCollection];
-    [iPodMusicPlayer play];
-     */
     
     [mediaPicker dismissModalViewControllerAnimated:YES];
     
@@ -107,9 +102,6 @@
                           list, @"playlist", nil];
     
     [socket sendEvent:@"makePlayList" withData:data];
-    
-    //self.playlist = mediaItemCollection;
-    //[playlistView reloadData];
 }
 
 #pragma mark - TableView

@@ -11,11 +11,12 @@
 
 @interface PlayListViewController : UIViewController <MPMediaPickerControllerDelegate>{
     IBOutlet UITableView *playlistView;
-    //MPMediaItemCollection *playlist;
+    MPMusicPlayerController *iPodMusicPlayer;
     NSMutableArray *playlist;
 }
 -(void) setPlaylist:(NSArray *)items;
 -(IBAction) pushBackButton;
+-(void) playMusic:(int)index;
 
 //@property (nonatomic, retain) MPMediaItemCollection *playlist;
 
