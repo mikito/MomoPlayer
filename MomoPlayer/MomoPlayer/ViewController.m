@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @implementation ViewController
+@synthesize playlist;
 
 - (void)didReceiveMemoryWarning
 {
@@ -27,11 +28,6 @@
     // WebSocket接続
    // SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
     //[socketIO connectToHost:@"localhost" onPort:3000];
-    
-    
-  //  NSLog(@"ViewDidLoad");
-    
-    mediaItems = [[NSMutableArray alloc] init];
 }
 
 - (void)viewDidUnload
@@ -39,15 +35,13 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    if(playlist)[playlist release];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-  
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -86,9 +80,40 @@
     [iPodMusicPlayer play];
     [mediaPicker dismissModalViewControllerAnimated:YES];
     [mediaPicker release];
+    
+    self.playlist = mediaItemCollection;
+    [playlistView reloadData];
+}
+
+#pragma mark - TableView
+-(NSInteger)numberOfSectionsInTableView:
+(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView
+numberOfRowsInSection:(NSInteger)section{
+    if(!playlist) return 0;
+    return [playlist.items count];
 }
 
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+		
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] 
+                    initWithStyle:UITableViewCellStyleSubtitle
+                    reuseIdentifier:CellIdentifier] 
+                autorelease];
+    }
+		
+    // Configure the cell...
+    cell.textLabel.text = [[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyArtist];
+    cell.detailTextLabel.text = [[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyTitle];
+    return cell;
+}
 
 #pragma mark - WebSocket
 

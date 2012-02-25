@@ -11,11 +11,13 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface ViewController : UIViewController <SocketIODelegate, MPMediaPickerControllerDelegate>{
-    NSMutableArray *mediaItems;
+    //NSMutableArray *mediaItems;
     IBOutlet UITableView *playlistView;
-    
+    MPMediaItemCollection *playlist;
 }
 
 -(IBAction) showPicker;
+
+@property (nonatomic, retain) MPMediaItemCollection *playlist;
 
 @end
