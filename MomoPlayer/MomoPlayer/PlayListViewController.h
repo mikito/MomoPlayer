@@ -12,6 +12,7 @@
 @interface PlayListViewController : UIViewController <MPMediaPickerControllerDelegate>{
     IBOutlet UITableView *playlistView;
     MPMediaItemCollection *playlist;
+    NSArray *items;
 }
 
 @property (nonatomic, retain) MPMediaItemCollection *playlist;

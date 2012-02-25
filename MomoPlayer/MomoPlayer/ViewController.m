@@ -11,6 +11,7 @@
 
 @implementation ViewController
 @synthesize playlist;
+@synthesize playlists;
 
 - (void)didReceiveMemoryWarning
 {
@@ -107,7 +108,7 @@
     [socket sendEvent:@"makePlayList" withData:data];
     
     //self.playlist = mediaItemCollection;
-    [playlistView reloadData];
+    //[playlistView reloadData];
 }
 
 #pragma mark - TableView
@@ -118,8 +119,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView
 numberOfRowsInSection:(NSInteger)section{
-    if(!playlist) return 0;
-    return [playlist.items count];
+    if(!playlists) return 0;
+    return [playlists count];
 }
 
 
@@ -135,26 +136,56 @@ numberOfRowsInSection:(NSInteger)section{
     }
 		
     // Configure the cell...
-    cell.textLabel.text = [[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyArtist];
-    cell.detailTextLabel.text = [[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyTitle];
+    cell.textLabel.text = [[playlists objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.detailTextLabel.text = @"";//[[playlist.items objectAtIndex:indexPath.row] valueForProperty:MPMediaItemPropertyTitle];
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	/*
+    if (!isExistData) return;
+	
+	Node_Artist *n = (Node_Artist *)[artists objectAtIndex:[indexPath row]];
+	
+	MusicianViewController *mView;
+	if(![self.viewcontroller isKindOfClass:[MusicianViewController class]]){
+		MusicianViewController *vc = [[MusicianViewController alloc] 
+									  initWithNibName:@"MusicianViewController"
+									  bundle:[NSBundle mainBundle]];
+		self.viewcontroller = vc;
+		mView = vc;
+		[vc release];
+	}else{
+		mView = (MusicianViewController *)self.viewcontroller;
+		mView.musicians = [[NSArray alloc]init]; 		
+	}
+	
+	[mView loadData:n];
+	[self.navigationController pushViewController:self.viewcontroller animated:YES];
+    */
+}
+
+
 #pragma mark - WebSocket
 
-- (void) socketIODidConnect:(SocketIO *)socket
+- (void) socketIODidConnect:(SocketIO *)_socket
 {
     NSLog(@"-- socketIODidConnect()");
     
     // objcイベント発火。(node.js側でon('objc', function() {...})でキャッチ)
-    [socket sendEvent:@"objc" withData:[NSDictionary dictionaryWithObject:@"hoge" forKey:@"Key"]];
-    NSLog(@"-- sendEvent()");
+    //[_socket sendEvent:@"objc" withData:[NSDictionary dictionaryWithObject:@"hoge" forKey:@"Key"]];
+    //NSLog(@"-- sendEvent()");
 }
 
 // node.jsからWebSocketでメッセージが送られてきた場合
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
-    NSLog(@"-- didReceiveMessage() >>> data: %@", [[packet.args objectAtIndex:0] objectForKey:@"echo"]);
+    // NSLog(@"-- didReceiveMessage() >>> data: %@", [[packet.args objectAtIndex:0] objectForKey:@"echo"]);
+    if([packet.name isEqualToString:@"playlists"]){
+        NSLog(@"Receive PlayList");
+        self.playlists =[packet.args objectAtIndex:0];
+        [playlistView reloadData];
+    }
 }
 
 

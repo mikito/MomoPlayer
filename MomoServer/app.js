@@ -36,6 +36,8 @@ app.get('/', function(req, res){
   });
 });
 
+var playlists = [];
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
@@ -43,9 +45,13 @@ var io = socketIO.listen(app);
 
 io.sockets.on('connection', function(socket){
   console.log('connection');
-  socket.emit('messages', {echo: 'from node.js'});
+
+  socket.emit('playlists', playlists);
 
   socket.on("makePlayList", function(data){
     console.log("makePlayList");
+    var playlist = {name : "Test", items : data};
+
+    playlists.push(playlist);
   });
 });

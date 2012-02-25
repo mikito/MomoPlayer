@@ -17,11 +17,13 @@
     //NSMutableArray *mediaItems;
     IBOutlet UITableView *playlistView;
     MPMediaItemCollection *playlist;
+    NSArray *playlists;
     SocketIO *socket;
 }
 
 -(IBAction) showPicker;
 
 @property (nonatomic, retain) MPMediaItemCollection *playlist;
+@property (nonatomic, retain) NSArray *playlists;
 
 @end
