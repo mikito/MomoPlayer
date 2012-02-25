@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C097A9514F8E02A005E5027 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C097A9314F8E02A005E5027 /* MessageViewController.m */; };
+		0C097A9614F8E02A005E5027 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C097A9414F8E02A005E5027 /* MessageViewController.xib */; };
 		0C7DD55114F866E900D46892 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7DD55014F866E900D46892 /* MediaPlayer.framework */; };
 		0C7DD55514F87B5B00D46892 /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7DD55314F87B5B00D46892 /* PlayListViewController.m */; };
 		0C7DD55614F87B5B00D46892 /* PlayListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7DD55414F87B5B00D46892 /* PlayListViewController.xib */; };
@@ -57,6 +59,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C097A9214F8E02A005E5027 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		0C097A9314F8E02A005E5027 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		0C097A9414F8E02A005E5027 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		0C7DD55014F866E900D46892 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0C7DD55214F87B5B00D46892 /* PlayListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
 		0C7DD55314F87B5B00D46892 /* PlayListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
@@ -224,6 +229,9 @@
 				0C7DD55214F87B5B00D46892 /* PlayListViewController.h */,
 				0C7DD55314F87B5B00D46892 /* PlayListViewController.m */,
 				0C7DD55414F87B5B00D46892 /* PlayListViewController.xib */,
+				0C097A9214F8E02A005E5027 /* MessageViewController.h */,
+				0C097A9314F8E02A005E5027 /* MessageViewController.m */,
+				0C097A9414F8E02A005E5027 /* MessageViewController.xib */,
 				0C7DD55714F8D5A100D46892 /* Resources */,
 			);
 			path = MomoPlayer;
@@ -400,6 +408,7 @@
 				0C7DD55614F87B5B00D46892 /* PlayListViewController.xib in Resources */,
 				0C7DD55A14F8D5B400D46892 /* play.png in Resources */,
 				0C7DD55B14F8D5B400D46892 /* none.png in Resources */,
+				0C097A9614F8E02A005E5027 /* MessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +449,7 @@
 				0CB396DC14F7E92700AC23EB /* RegexKitLite.m in Sources */,
 				0CB396DD14F7E92700AC23EB /* SocketIO.m in Sources */,
 				0C7DD55514F87B5B00D46892 /* PlayListViewController.m in Sources */,
+				0C097A9514F8E02A005E5027 /* MessageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

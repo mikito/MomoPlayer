@@ -7,7 +7,7 @@
 //
 
 #import "PlayListViewController.h"
-
+#import "MessageViewController.h"
 
 @implementation PlayListViewController
 //@synthesize playlist;
@@ -84,6 +84,11 @@
     [iPodMusicPlayer stop];
     
     [delegate exitPlay];
+}
+
+- (IBAction)pushMessageButton{
+    MessageViewController *mvc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+    [self presentModalViewController:mvc animated:YES];
 }
 
 #pragma mark - Player

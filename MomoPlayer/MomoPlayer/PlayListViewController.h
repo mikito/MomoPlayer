@@ -25,6 +25,7 @@
 }
 -(void) setPlaylist:(NSArray *)items;
 -(IBAction) pushBackButton;
+-(IBAction)pushMessageButton;
 -(void) playMusic:(int)index;
 
 //@property (nonatomic, retain) MPMediaItemCollection *playlist;
