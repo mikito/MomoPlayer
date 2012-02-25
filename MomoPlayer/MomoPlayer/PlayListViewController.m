@@ -11,6 +11,7 @@
 
 @implementation PlayListViewController
 //@synthesize playlist;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,7 +39,14 @@
     
     iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     
-    [self playMusic:0];
+    NSNotificationCenter *notificationCenter =[NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(playerNotification:) name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification object:iPodMusicPlayer];
+                                                            
+    [iPodMusicPlayer beginGeneratingPlaybackNotifications];
+    
+    playIndex = 0;
+    
+    //[self playMusic:playIndex];
 }
 
 - (void)viewDidUnload
@@ -59,9 +67,19 @@
 - (IBAction)pushBackButton{
     [self.navigationController popViewControllerAnimated:YES];
     [iPodMusicPlayer stop];
+    [delegate exitPlay];
 }
 
 #pragma mark - Player
+-(void) playerNotification:(id)notification{
+    if(iPodMusicPlayer.playbackState == MPMusicPlaybackStateStopped){
+        playIndex ++;
+        if([playlist count] <= playIndex){
+            // send end;
+        }
+        NSLog(@"Music Stopped");
+    }
+}
 
 -(void)playMusic:(int)index{
     if([playlist count] <= index) return;

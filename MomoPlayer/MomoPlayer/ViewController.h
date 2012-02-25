@@ -9,21 +9,26 @@
 #import <UIKit/UIKit.h>
 #import "SocketIO.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "PlayListViewController.h"
 
 #define HOST @"10.0.1.10"
 #define PORT 3000
 
-@interface ViewController : UIViewController <SocketIODelegate, MPMediaPickerControllerDelegate>{
+@interface ViewController : UIViewController <SocketIODelegate, MPMediaPickerControllerDelegate, PlayListViewControllerDelegate>{
     //NSMutableArray *mediaItems;
     IBOutlet UITableView *playlistView;
-    MPMediaItemCollection *playlist;
+    //MPMediaItemCollection *playlist;
     NSArray *playlists;
     SocketIO *socket;
+    PlayListViewController *playlistViewController;
 }
 
 -(IBAction) showPicker;
 
-@property (nonatomic, retain) MPMediaItemCollection *playlist;
+-(void)join:(int)playlistId;
+-(void)leave;
+
+//@property (nonatomic, retain) MPMediaItemCollection *playlist;
 @property (nonatomic, retain) NSArray *playlists;
 
 @end

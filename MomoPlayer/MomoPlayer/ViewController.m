@@ -7,10 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "PlayListViewController.h"
+
 
 @implementation ViewController
-@synthesize playlist;
+//@synthesize playlist;
 @synthesize playlists;
 
 - (void)didReceiveMemoryWarning
@@ -29,6 +29,9 @@
     // WebSocket接続
     socket = [[SocketIO alloc] initWithDelegate:self];
     [socket connectToHost:HOST onPort:PORT];
+    
+    playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
+    playlistViewController.delegate = self;
 }
 
 - (void)viewDidUnload
@@ -36,7 +39,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    if(playlist)[playlist release];
+    if(playlists)[playlists release];
     [socket release];
     
 }
@@ -44,6 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //[self leave];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -82,10 +86,8 @@
     
     [mediaPicker release];
     
-    PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
-    //playlistViewController.playlist = mediaItemCollection;
-    [playlistViewController setPlaylist:nil];
-    [self.navigationController pushViewController:playlistViewController animated:YES];
+    //PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
+    
     
     NSMutableArray *list = [[NSMutableArray alloc] init];
     for (MPMediaItem *item in mediaItemCollection.items) {
@@ -102,6 +104,10 @@
                           list, @"playlist", nil];
     
     [socket sendEvent:@"makePlayList" withData:data];
+    [data release];
+    
+    [playlistViewController setPlaylist:list];
+    [self.navigationController pushViewController:playlistViewController animated:YES];
 }
 
 #pragma mark - TableView
@@ -135,9 +141,10 @@ numberOfRowsInSection:(NSInteger)section{
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
+    //playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
     [playlistViewController setPlaylist:[[playlists objectAtIndex:indexPath.row] objectForKey:@"items"]];
     [self.navigationController pushViewController:playlistViewController animated:YES];
+    [self join:indexPath.row];
 }
 
 
@@ -163,5 +170,22 @@ numberOfRowsInSection:(NSInteger)section{
     }
 }
 
+- (void)join:(int)playlistId{
+    NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:playlistId], @"playlistid", nil];
+    [socket sendEvent:@"join" withData:data];   
+}
+
+- (void)leave{
+    //NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:playlistId], @"playlistid", nil];
+    [socket sendEvent:@"leave" withData:nil];   
+}
+
+# pragma mark - PlayListView
+-(void) nextSong:index{
+
+}
+-(void) exitPlay{
+    [self leave];
+}
 
 @end

@@ -9,15 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+@protocol PlayListViewControllerDelegate
+-(void) nextSong:index;
+-(void) exitPlay;
+@end
+
 @interface PlayListViewController : UIViewController <MPMediaPickerControllerDelegate>{
+    id delegate;
     IBOutlet UITableView *playlistView;
     MPMusicPlayerController *iPodMusicPlayer;
     NSMutableArray *playlist;
+    int playIndex;
 }
 -(void) setPlaylist:(NSArray *)items;
 -(IBAction) pushBackButton;
 -(void) playMusic:(int)index;
 
 //@property (nonatomic, retain) MPMediaItemCollection *playlist;
+@property (nonatomic, retain) id delegate;
 
 @end
