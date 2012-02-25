@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SocketIO.h"
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface ViewController : UIViewController <SocketIODelegate>
+@interface ViewController : UIViewController <SocketIODelegate, MPMediaPickerControllerDelegate>{
+    NSMutableArray *mediaItems;
+    IBOutlet UITableView *playlistView;
+    
+}
+
+-(IBAction) showPicker;
+
 @end

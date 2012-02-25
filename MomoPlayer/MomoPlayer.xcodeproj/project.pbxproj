@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C7DD55114F866E900D46892 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7DD55014F866E900D46892 /* MediaPlayer.framework */; };
 		0CB395FD14F7E75200AC23EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB395FC14F7E75200AC23EB /* UIKit.framework */; };
 		0CB395FF14F7E75200AC23EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB395FE14F7E75200AC23EB /* Foundation.framework */; };
 		0CB3960114F7E75200AC23EB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB3960014F7E75200AC23EB /* CoreGraphics.framework */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C7DD55014F866E900D46892 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0CB395F814F7E75200AC23EB /* MomoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MomoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB395FC14F7E75200AC23EB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0CB395FE14F7E75200AC23EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -137,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C7DD55114F866E900D46892 /* MediaPlayer.framework in Frameworks */,
 				0CB3971114F7EF3D00AC23EB /* libxml2.2.dylib in Frameworks */,
 				0CB3962214F7E8E500AC23EB /* libicucore.dylib in Frameworks */,
 				0CB3962014F7E8B500AC23EB /* libz.dylib in Frameworks */,
@@ -172,6 +175,7 @@
 		0CB395FB14F7E75200AC23EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C7DD55014F866E900D46892 /* MediaPlayer.framework */,
 				0CB3971014F7EF3D00AC23EB /* libxml2.2.dylib */,
 				0CB3962114F7E8E500AC23EB /* libicucore.dylib */,
 				0CB3961F14F7E8B500AC23EB /* libz.dylib */,
@@ -440,7 +444,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ALWAYS_SEARCH_USER_PATHS[arch=*]" = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mikito Yoshiya (9NXNTT79FM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mikito Yoshiya (9NXNTT79FM)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -454,7 +459,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				PROVISIONING_PROFILE = "369DDD1E-1C16-448A-BBD8-86D592E7ED10";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "369DDD1E-1C16-448A-BBD8-86D592E7ED10";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -464,6 +471,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mikito Yoshiya (9NXNTT79FM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -471,8 +479,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "369DDD1E-1C16-448A-BBD8-86D592E7ED10";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -524,6 +533,7 @@
 				0CB3961814F7E75200AC23EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -25,8 +25,13 @@
     
     
     // WebSocket接続
-    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:@"localhost" onPort:3000];
+   // SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
+    //[socketIO connectToHost:@"localhost" onPort:3000];
+    
+    
+  //  NSLog(@"ViewDidLoad");
+    
+    mediaItems = [[NSMutableArray alloc] init];
 }
 
 - (void)viewDidUnload
@@ -40,11 +45,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+  
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -62,6 +71,26 @@
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
+-(IBAction)showPicker{
+    MPMediaPickerController *mediaPickerController = [[MPMediaPickerController alloc] init];
+    mediaPickerController.delegate = self;
+    mediaPickerController.allowsPickingMultipleItems = YES;
+    [self presentModalViewController:mediaPickerController animated: YES];
+}
+
+#pragma mark - MediaPicker
+-(void) mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
+    MPMusicPlayerController *iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    [iPodMusicPlayer setQueueWithItemCollection:mediaItemCollection];
+    [iPodMusicPlayer play];
+    [mediaPicker dismissModalViewControllerAnimated:YES];
+    [mediaPicker release];
+}
+
+
+
+#pragma mark - WebSocket
 
 - (void) socketIODidConnect:(SocketIO *)socket
 {
