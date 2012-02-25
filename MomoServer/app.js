@@ -44,4 +44,8 @@ var io = socketIO.listen(app);
 io.sockets.on('connection', function(socket){
   console.log('connection');
   socket.emit('messages', {echo: 'from node.js'});
+
+  socket.on("makePlayList", function(data){
+    console.log("makePlayList");
+  });
 });

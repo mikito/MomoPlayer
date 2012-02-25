@@ -17,6 +17,7 @@
     //NSMutableArray *mediaItems;
     IBOutlet UITableView *playlistView;
     MPMediaItemCollection *playlist;
+    SocketIO *socket;
 }
 
 -(IBAction) showPicker;

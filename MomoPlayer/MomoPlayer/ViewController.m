@@ -26,8 +26,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     // WebSocket接続
-    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:HOST onPort:PORT];
+    socket = [[SocketIO alloc] initWithDelegate:self];
+    [socket connectToHost:HOST onPort:PORT];
 }
 
 - (void)viewDidUnload
@@ -36,6 +36,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     if(playlist)[playlist release];
+    [socket release];
     
 }
 
@@ -89,7 +90,21 @@
     playlistViewController.playlist = mediaItemCollection;
     [self.navigationController pushViewController:playlistViewController animated:YES];
     
+    NSMutableArray *list = [[NSMutableArray alloc] init];
+    for (MPMediaItem *item in mediaItemCollection.items) {
+        NSDictionary *song = [[NSDictionary alloc] initWithObjectsAndKeys:
+                [item valueForProperty:MPMediaItemPropertyArtist], @"artist",
+                [item valueForProperty:MPMediaItemPropertyTitle], @"title",
+                nil
+        ];
+        [list addObject:song];
+        [song release];
+    }
     
+    NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys:
+                          list, @"playlist", nil];
+    
+    [socket sendEvent:@"makePlayList" withData:data];
     
     //self.playlist = mediaItemCollection;
     [playlistView reloadData];
