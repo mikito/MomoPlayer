@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "PlayListViewController.h"
 
 @implementation ViewController
 @synthesize playlist;
@@ -24,10 +25,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    
     // WebSocket接続
-   // SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
-    //[socketIO connectToHost:@"localhost" onPort:3000];
+    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:HOST onPort:PORT];
 }
 
 - (void)viewDidUnload
@@ -75,13 +75,23 @@
 
 #pragma mark - MediaPicker
 -(void) mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
-    MPMusicPlayerController *iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+    /*
+     MPMusicPlayerController *iPodMusicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     [iPodMusicPlayer setQueueWithItemCollection:mediaItemCollection];
     [iPodMusicPlayer play];
+     */
+    
     [mediaPicker dismissModalViewControllerAnimated:YES];
+    
     [mediaPicker release];
     
-    self.playlist = mediaItemCollection;
+    PlayListViewController *playlistViewController = [[PlayListViewController alloc] initWithNibName:@"PlayListViewController" bundle:nil];
+    playlistViewController.playlist = mediaItemCollection;
+    [self.navigationController pushViewController:playlistViewController animated:YES];
+    
+    
+    
+    //self.playlist = mediaItemCollection;
     [playlistView reloadData];
 }
 
@@ -129,7 +139,7 @@ numberOfRowsInSection:(NSInteger)section{
 // node.jsからWebSocketでメッセージが送られてきた場合
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
-    NSLog(@"-- didReceiveMessage() >>> data: %@", packet.data);
+    NSLog(@"-- didReceiveMessage() >>> data: %@", [[packet.args objectAtIndex:0] objectForKey:@"echo"]);
 }
 
 
